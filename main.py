@@ -1,5 +1,7 @@
 from tkinter import Tk, ttk, IntVar
 
+import gen_pass
+
 root = Tk()
 root.title("Генератор паролей")
 root.geometry("500x350")
@@ -40,6 +42,7 @@ def generate_password():
     use_special = bool(var_special.get())
 
     # пока просто вывод в консоль
+    gen_pass.gen_pass(use_digits, use_letters, use_special,pass_len = length)
     print(f"Генерируем пароль длиной {length}, цифры={use_digits}, буквы={use_letters}, спецсимволы={use_special}")
 
 generate_btn = ttk.Button(root, text="Генерировать", command=generate_password)
