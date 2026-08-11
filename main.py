@@ -1,4 +1,4 @@
-from tkinter import Tk, ttk, IntVar
+from tkinter import Tk, ttk, IntVar, END
 
 import gen_pass
 
@@ -29,11 +29,21 @@ length_entry = ttk.Entry(root, width=10)
 length_label.grid(row=1, column=0, padx=20, pady=10, sticky="e")
 length_entry.grid(row=1, column=1, padx=5, pady=10, sticky="w")
 
+# Поле для вывода пароля
+password_label = ttk.Label(root, text="Ваш пароль:")
+password_entry = ttk.Entry(root, width=30)
+
+password_label.grid(row=2, column=0, padx=20, pady=20, sticky="e")
+password_entry.grid(row=2, column=1, columnspan=2, padx=5, pady=20, sticky="w")
+
+
 def generate_password():
     length_text = length_entry.get()
     # проверяем, что введено целое число
     if not length_text.isdigit():
-        print("Пожалуйста, введите корректную длину пароля (целое число).")
+        # Очищаем поле и пишем ошибку
+        password_entry.delete(0, END)
+        password_entry.insert(0, "Введите число!")
         return
 
     length = int(length_text)
@@ -41,12 +51,22 @@ def generate_password():
     use_letters = bool(var_letters.get())
     use_special = bool(var_special.get())
 
-    # пока просто вывод в консоль
-    gen_pass.gen_pass(use_digits, use_letters, use_special,pass_len = length)
-    print(f"Генерируем пароль длиной {length}, цифры={use_digits}, буквы={use_letters}, спецсимволы={use_special}")
+    # Проверка: выбран ли хотя бы один чекбокс
+    if not (use_digits or use_letters or use_special):
+        password_entry.delete(0, END)
+        password_entry.insert(0, "Выберите типы символов!")
+        return
+
+    # Получаем пароль
+    generated_password = gen_pass.gen_pass(use_digits, use_letters, use_special, pass_len=length)
+
+    # Выводим пароль в текстовое поле
+    password_entry.delete(0, END)  # Очищаем поле
+    password_entry.insert(0, generated_password)  # Вставляем новый текст
+
 
 generate_btn = ttk.Button(root, text="Генерировать", command=generate_password)
-generate_btn.grid(row=1, column=2,  pady=20, sticky="w")
+generate_btn.grid(row=1, column=2, pady=20, sticky="w")
 
 if __name__ == "__main__":
     root.mainloop()

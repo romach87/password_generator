@@ -22,5 +22,5 @@ def gen_pass(digits, letters, special, pass_len):
     # Генерируем пароль нужной длины с помощью случайного выбора
     password = ''.join(random.choice(characters) for _ in range(pass_len))
 
-    print(password)
+    # print(password)
     return password
