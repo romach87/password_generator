@@ -48,6 +48,13 @@ status_label = ttk.Label(root,text="---")
 status_label.grid(row=5, column=0, columnspan=3, padx=20, pady=0, sticky="n")
 
 
+def copy_password():
+    password = password_entry.get()
+    if password:
+        root.clipboard_clear()
+        root.clipboard_append(password)
+        root.update()
+
 def generate_password():
     length_text = length_entry.get()
     # проверяем, что введено целое число
@@ -77,9 +84,15 @@ def generate_password():
     password_entry.insert(0, generated_password)  # Вставляем новый текст
     status_label.config(text=status)
 
-
+# Кнопка генерировать пароль
 generate_btn = ttk.Button(root, text="Генерировать", command=generate_password)
 generate_btn.grid(row=3, column=1, padx=40,pady=(20,0), sticky="w")
+
+# Кнопка копировать пароль
+copy_btn = ttk.Button(root,text="Копировать",command=copy_password)
+copy_btn.grid(row=4, column=1, sticky="w", padx=110)
+
+
 
 if __name__ == "__main__":
     root.mainloop()
