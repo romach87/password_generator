@@ -1,3 +1,10 @@
+"""
+Модуль генерации случайных паролей.
+
+Содержит функцию формирования пароля заданной длины
+из выбранных пользователем групп символов.
+"""
+
 import random
 import string
 
@@ -25,11 +32,12 @@ def gen_pass(digits, letters_lower, letters_upper, special, pass_len):
         return 0
     # characters = char_0 + char_1 + char_2
 
-
     # Генерируем пароль нужной длины с помощью случайного выбора
-    password = ''.join(random.choice(characters) for _ in range(pass_len))
+    password = "".join(random.choice(characters) for _ in range(pass_len))
 
-    status = check_pass.check_password(password, digits, letters_lower, letters_upper, special)
+    status = check_pass.check_password(
+        password, digits, letters_lower, letters_upper, special
+    )
 
     # print(password)
     return password, status
