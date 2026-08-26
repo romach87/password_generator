@@ -44,6 +44,9 @@ password_entry = ttk.Entry(root, width=30)
 password_label.grid(row=4, column=0, padx=20, pady=0, sticky="w")
 password_entry.grid(row=4, column=0, columnspan=3, padx=100, pady=5, sticky="w")
 
+status_label = ttk.Label(root,text="---")
+status_label.grid(row=5, column=0, columnspan=3, padx=20, pady=0, sticky="n")
+
 
 def generate_password():
     length_text = length_entry.get()
@@ -67,11 +70,12 @@ def generate_password():
         return
 
     # Получаем пароль
-    generated_password = gen_pass.gen_pass(use_digits, use_letters_lower, use_letters_upper, use_special, pass_len=length)
+    generated_password, status = gen_pass.gen_pass(use_digits, use_letters_lower, use_letters_upper, use_special, pass_len=length)
 
     # Выводим пароль в текстовое поле
     password_entry.delete(0, END)  # Очищаем поле
     password_entry.insert(0, generated_password)  # Вставляем новый текст
+    status_label.config(text=status)
 
 
 generate_btn = ttk.Button(root, text="Генерировать", command=generate_password)

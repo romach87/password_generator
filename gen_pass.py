@@ -1,6 +1,9 @@
 import random
 import string
 
+import check_pass
+
+
 def gen_pass(digits, letters_lower, letters_upper, special, pass_len):
     pass_len = pass_len if pass_len > 0 else None
 
@@ -22,8 +25,11 @@ def gen_pass(digits, letters_lower, letters_upper, special, pass_len):
         return 0
     # characters = char_0 + char_1 + char_2
 
+
     # Генерируем пароль нужной длины с помощью случайного выбора
     password = ''.join(random.choice(characters) for _ in range(pass_len))
 
+    status = check_pass.check_password(password, digits, letters_lower, letters_upper, special)
+
     # print(password)
-    return password
+    return password, status
