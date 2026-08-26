@@ -1,7 +1,7 @@
 import random
 import string
 
-def gen_pass(digits, letters, special, pass_len):
+def gen_pass(digits, letters_lower, letters_upper, special, pass_len):
     pass_len = pass_len if pass_len > 0 else None
 
     # Собираем символы: буквы, цифры и символы
@@ -9,13 +9,16 @@ def gen_pass(digits, letters, special, pass_len):
     if digits:
         char_0 = string.digits
         characters += char_0
-    if letters:
-        char_1 = string.ascii_letters
+    if letters_lower:
+        char_1 = string.ascii_lowercase
         characters += char_1
-    if special:
-        char_2 = string.punctuation
+    if letters_upper:
+        char_2 = string.ascii_uppercase
         characters += char_2
-    if not digits and not letters and not special:
+    if special:
+        char_3 = string.punctuation
+        characters += char_3
+    if not digits and not letters_lower and not letters_upper and not special:
         return 0
     # characters = char_0 + char_1 + char_2
 
